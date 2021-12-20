@@ -44,7 +44,6 @@ EXPORT_SYMBOL(ssv_devicetype);
 #ifdef CONFIG_DEBUG_FS
 static struct dentry *debugfs;
 #endif
-struct proc_dir_entry *procfs;
 static char *ssv6xxx_cmd_buf;
 char *ssv6xxx_result_buf;
 extern struct ssv6xxx_cfg_cmd_table cfg_cmds[];
@@ -222,10 +221,6 @@ static int __init ssvdevice_init(void)
     debugfs_create_u32(DEBUG_DEVICETYPE_ENTRY, S_IRUGO|S_IWUSR, debugfs, &ssv_devicetype);
     debugfs_create_file(DEBUG_CMD_ENTRY, S_IRUGO|S_IWUSR, debugfs, NULL, &ssv6xxx_dbg_fops);
 #endif
-    procfs = proc_mkdir(DEBUG_DIR_ENTRY, NULL);
-    if (!procfs)
-        return -ENOMEM;
-    proc_create(DEBUG_CMD_ENTRY, S_IRUGO|S_IWUGO, procfs, &ssv6xxx_dbg_fops);
     sta_cfg_set(stacfgpath);
 #if (defined(CONFIG_SSV_SUPPORT_ANDROID)||defined(CONFIG_SSV_BUILD_AS_ONE_KO))
     {
@@ -256,8 +251,6 @@ static void __exit ssvdevice_exit(void)
 #ifdef CONFIG_DEBUG_FS
     debugfs_remove_recursive(debugfs);
 #endif
-    remove_proc_entry(DEBUG_CMD_ENTRY, procfs);
-    remove_proc_entry(DEBUG_DIR_ENTRY, NULL);
     kfree(ssv6xxx_cmd_buf);
 }
 #if (defined(CONFIG_SSV_SUPPORT_ANDROID)||defined(CONFIG_SSV_BUILD_AS_ONE_KO))
