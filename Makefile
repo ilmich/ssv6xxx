@@ -24,7 +24,9 @@ DEF_PARSER_H = $(KBUILD_TOP)/include/ssv_conf_parser.h
 $(shell env ccflags="$(ccflags-y)" $(KBUILD_TOP)/parser-conf.sh $(DEF_PARSER_H))
 
 KERN_SRCS := ssvdevice/ssvdevice.c
+ifeq ($(findstring -DCONFIG_SSV6XXX_DEBUGFS, $(ccflags-y)), -DCONFIG_SSV6XXX_DEBUGFS)
 KERN_SRCS += ssvdevice/ssv_cmd.c
+endif
 
 KERN_SRCS += hci/ssv_hci.c
 

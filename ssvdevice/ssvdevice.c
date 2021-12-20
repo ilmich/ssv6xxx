@@ -25,8 +25,8 @@
 #include <linux/errno.h>
 #ifdef CONFIG_DEBUG_FS
 #include <linux/debugfs.h>
-#endif
 #include "ssv_cmd.h"
+#endif
 #include "ssv_cfg.h"
 #include <linux/fs.h>
 #include <asm/segment.h>
