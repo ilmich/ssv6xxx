@@ -33,12 +33,21 @@
 #include <asm/uaccess.h>
 #include <linux/buffer_head.h>
 #include <linux/ctype.h>
+MODULE_AUTHOR("iComm Semiconductor Co., Ltd");
+MODULE_DESCRIPTION("Shared library for SSV wireless LAN cards.");
+MODULE_LICENSE("Dual BSD/GPL");
 static char *stacfgpath = NULL;
 EXPORT_SYMBOL(stacfgpath);
+module_param(stacfgpath, charp, 0000);
+MODULE_PARM_DESC(stacfgpath, "Get path of sta cfg");
 char *cfgfirmwarepath = NULL;
 EXPORT_SYMBOL(cfgfirmwarepath);
+module_param(cfgfirmwarepath, charp, 0000);
+MODULE_PARM_DESC(cfgfirmwarepath, "Get firmware path");
 char* ssv_initmac = NULL;
 EXPORT_SYMBOL(ssv_initmac);
+module_param(ssv_initmac, charp, 0644);
+MODULE_PARM_DESC(ssv_initmac, "Wi-Fi MAC address");
 u32 ssv_devicetype = 0;
 EXPORT_SYMBOL(ssv_devicetype);
 #ifdef CONFIG_DEBUG_FS
@@ -257,15 +266,6 @@ static void __exit ssvdevice_exit(void)
 EXPORT_SYMBOL(ssvdevice_init);
 EXPORT_SYMBOL(ssvdevice_exit);
 #else
-MODULE_AUTHOR("iComm Semiconductor Co., Ltd");
-MODULE_DESCRIPTION("Shared library for SSV wireless LAN cards.");
-MODULE_LICENSE("Dual BSD/GPL");
-module_param(stacfgpath, charp, 0000);
-MODULE_PARM_DESC(stacfgpath, "Get path of sta cfg");
-module_param(cfgfirmwarepath, charp, 0000);
-MODULE_PARM_DESC(cfgfirmwarepath, "Get firmware path");
-module_param(ssv_initmac, charp, 0644);
-MODULE_PARM_DESC(ssv_initmac, "Wi-Fi MAC address");
 module_init(ssvdevice_init);
 module_exit(ssvdevice_exit);
 module_param_named(devicetype,ssv_devicetype, uint , S_IRUSR | S_IWUSR);
